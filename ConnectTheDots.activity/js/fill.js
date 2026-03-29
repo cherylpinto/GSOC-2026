@@ -1,6 +1,3 @@
-// fill.js — Polygon detection + per-region fill
-// When a line completes a cycle, detect the polygon and fill it.
-// Each region keeps its own color; new fills don't overwrite old ones.
 
 define([], function () {
 	"use strict";
@@ -82,7 +79,6 @@ define([], function () {
 
 		for (var r = 0; r < cellRows; r++) {
 			for (var c = 0; c < cellCols; c++) {
-				// Cell center
 				var cx = grid.offsetX + c * grid.spacing + grid.spacing / 2;
 				var cy = grid.offsetY + r * grid.spacing + grid.spacing / 2;
 

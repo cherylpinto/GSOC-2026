@@ -1,5 +1,4 @@
 // canvas.js — Rendering and input handling
-// Click-click interaction. Polygon-based fills (actual shapes, not squares).
 
 define(["activity/grid", "activity/fill"], function (grid, fill) {
 	"use strict";
@@ -103,13 +102,11 @@ define(["activity/grid", "activity/fill"], function (grid, fill) {
 		for (var i = 0; i < dots.length; i++) {
 			var d = dots[i];
 
-			// Check if dot is inside a filled polygon OR is a boundary vertex
 			var isHidden = false;
 			for (var p = 0; p < this.filledPolygons.length; p++) {
 				var poly = this.filledPolygons[p];
 				var dynamicVertices = [];
 				
-				// Quick strict check if it's one of the boundary vertices
 				var isBoundary = false;
 				for (var v = 0; v < poly.vertices.length; v++) {
 					var pv = poly.vertices[v];
@@ -117,7 +114,6 @@ define(["activity/grid", "activity/fill"], function (grid, fill) {
 					var vy = pv.row !== undefined ? g.offsetY + pv.row * g.spacing : pv.y;
 					dynamicVertices.push({ x: vx, y: vy });
 
-					// Match by row/col if available, fallback to x/y
 					if (pv.col !== undefined) {
 						if (pv.row === d.row && pv.col === d.col) isBoundary = true;
 					} else {
@@ -125,7 +121,6 @@ define(["activity/grid", "activity/fill"], function (grid, fill) {
 					}
 				}
 				
-				// Hide dots inside the polygon and boundary dots.
 				if (isBoundary || fill.pointInPolygon(d.x, d.y, dynamicVertices)) {
 					isHidden = true;
 					break;
@@ -146,17 +141,14 @@ define(["activity/grid", "activity/fill"], function (grid, fill) {
 				}
 			}
 
-			// Hidden dots are skipped unless they have an active label (needed for multipart templates)
 			if (isHidden && !dotLabel) continue;
 
 			if (isSel) {
-				// Outer translucent selection ring
 				ctx.beginPath();
 				ctx.arc(d.x, d.y, 15, 0, Math.PI * 2);
 				ctx.fillStyle = "rgba(51, 51, 51, 0.25)";
 				ctx.fill();
 
-				// Inner solid core
 				ctx.beginPath();
 				ctx.arc(d.x, d.y, 7, 0, Math.PI * 2);
 				ctx.fillStyle = "#333";
@@ -164,16 +156,14 @@ define(["activity/grid", "activity/fill"], function (grid, fill) {
 			} else if (dotLabel) {
 				ctx.beginPath();
 				ctx.arc(d.x, d.y, 10, 0, Math.PI * 2);
-				ctx.fillStyle = "#005696"; // Sugarizer blue
+				ctx.fillStyle = "#005696"; 
 				ctx.fill();
 			} else if (isHov) {
-				// Outer hover ring
 				ctx.beginPath();
 				ctx.arc(d.x, d.y, 11, 0, Math.PI * 2);
 				ctx.fillStyle = "rgba(85, 85, 85, 0.2)";
 				ctx.fill();
 
-				// Inner hover core
 				ctx.beginPath();
 				ctx.arc(d.x, d.y, 5, 0, Math.PI * 2);
 				ctx.fillStyle = "#555";
@@ -216,18 +206,15 @@ define(["activity/grid", "activity/fill"], function (grid, fill) {
 		}
 	};
 
-	/** Render filled polygons via offscreen canvas to prevent muddy color blending when overlapping. */
 	CanvasRenderer.prototype._drawFilledPolygons = function (ctx) {
 		if (!this.filledPolygons.length || !this.grid) return;
 		var g = this.grid;
 
-		// Create an offscreen canvas of the exact same size
 		var offCanvas = document.createElement("canvas");
 		offCanvas.width = this.el.width;
 		offCanvas.height = this.el.height;
 		var offCtx = offCanvas.getContext("2d");
 
-		// Draw polygons solid (alpha 1.0) so older shapes completely cover newer outer shapes.
 		for (var i = this.filledPolygons.length - 1; i >= 0; i--) {
 			var poly = this.filledPolygons[i];
 			if (!poly.vertices || poly.vertices.length < 3) continue;
@@ -235,7 +222,6 @@ define(["activity/grid", "activity/fill"], function (grid, fill) {
 			offCtx.fillStyle = poly.color;
 			offCtx.beginPath();
 			
-			// Support scaling for new shapes with col/row; fallback to static x/y for old journal data
 			var firstCol = poly.vertices[0].col;
 			var firstRow = poly.vertices[0].row;
 			var startX = firstCol !== undefined ? g.offsetX + firstCol * g.spacing : poly.vertices[0].x;
@@ -253,7 +239,6 @@ define(["activity/grid", "activity/fill"], function (grid, fill) {
 			offCtx.fill();
 		}
 
-		// Composite the entire offscreen layer onto the main canvas at 1.0 opacity (solid fill)
 		ctx.save();
 		ctx.globalAlpha = 1.0;
 		ctx.drawImage(offCanvas, 0, 0);
@@ -268,7 +253,6 @@ define(["activity/grid", "activity/fill"], function (grid, fill) {
 		this.render();
 	};
 
-	// --- Input: click-click ---
 	CanvasRenderer.prototype._bindEvents = function () {
 		var self = this;
 
@@ -296,7 +280,6 @@ define(["activity/grid", "activity/fill"], function (grid, fill) {
 		window.addEventListener("resize", function () { self.resize(); });
 	};
 
-	// --- Serialization ---
 	CanvasRenderer.prototype.toJSON = function () {
 		return { lines: this.lineManager.toJSON(), filledPolygons: this.filledPolygons };
 	};

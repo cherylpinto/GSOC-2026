@@ -1,7 +1,3 @@
-// templates.js — Predefined dot sequences for Number Mode
-// Parts use { dots: [...], open: true/false } format
-// open=true means the path stays open (for letters/numbers), false means it auto-closes
-
 define([], function () {
 	"use strict";
 
@@ -117,13 +113,13 @@ define([], function () {
 				parts: [
 					{
 						dots: [
-							{ r: 3, c: -4, label: "1" },   // bottom-left
-							{ r: -1, c: -4, label: "2" },  // left wall
-							{ r: -1, c: -5, label: "3" },  // left roof extension (INLINE)
-							{ r: -4, c: 0, label: "4" },   // roof peak (same height)
-							{ r: -1, c: 5, label: "5" },   // right roof extension (INLINE)
-							{ r: -1, c: 4, label: "6" },   // right wall
-							{ r: 3, c: 4, label: "7" }     // bottom-right
+							{ r: 3, c: -4, label: "1" },   
+							{ r: -1, c: -4, label: "2" },  
+							{ r: -1, c: -5, label: "3" },  
+							{ r: -4, c: 0, label: "4" },   
+							{ r: -1, c: 5, label: "5" },   
+							{ r: -1, c: 4, label: "6" }, 
+							{ r: 3, c: 4, label: "7" }     
 						]
 					}
 				]

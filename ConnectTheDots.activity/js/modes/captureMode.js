@@ -10,7 +10,7 @@ define([], function () {
 	var GAME_DURATION_MS = 90 * 1000;
 
 	var PALETTE = [
-		{ head: '#005696', fill: '#00A0FF' }, // Default Sugarizer blue style
+		{ head: '#005696', fill: '#00A0FF' }, 
 		{ head: '#6b0a08', fill: '#b52a1a' },
 		{ head: '#094a1c', fill: '#1a8c40' },
 		{ head: '#380860', fill: '#7020b0' },
@@ -57,7 +57,6 @@ define([], function () {
 	CaptureMode.prototype.activate = function () {
 		this.active = true;
 		
-		// Hijack canvasRenderer rendering to avoid flicker
 		this._origRender = this.canvasRenderer.render;
 		this.canvasRenderer.render = function() {};
 

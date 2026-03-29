@@ -51,7 +51,7 @@ body {
   background: -ms-linear-gradient(top, rgba(0,0,50,0.9) 0%, rgba(0,0,100,0.9) 100%) no-repeat;
   background: -o-linear-gradient(top, rgba(0,0,50,0.9) 0%, rgba(0,0,100,0.9) 100%) no-repeat;
   background: linear-gradient(top, rgba(0,0,50,0.9) 0%, rgba(0,0,100,0.9) 100%) no-repeat;
-  *background-color: #030;
+  background-color: #030;
 }
 .humane.humane-libnotify-success,
 .humane-libnotify.humane-libnotify-success {
@@ -62,7 +62,7 @@ body {
   background: -ms-linear-gradient(top, rgba(0,50,0,0.9) 0%, rgba(0,100,0,0.9) 100%) no-repeat;
   background: -o-linear-gradient(top, rgba(0,50,0,0.9) 0%, rgba(0,100,0,0.9) 100%) no-repeat;
   background: linear-gradient(top, rgba(0,50,0,0.9) 0%, rgba(0,100,0,0.9) 100%) no-repeat;
-  *background-color: #030;
+  background-color: #030;
 }
 .humane.humane-libnotify-error,
 .humane-libnotify.humane-libnotify-error {
@@ -73,7 +73,7 @@ body {
   background: -ms-linear-gradient(top, rgba(50,0,0,0.9) 0%, rgba(100,0,0,0.9) 100%) no-repeat;
   background: -o-linear-gradient(top, rgba(50,0,0,0.9) 0%, rgba(100,0,0,0.9) 100%) no-repeat;
   background: linear-gradient(top, rgba(50,0,0,0.9) 0%, rgba(100,0,0,0.9) 100%) no-repeat;
-  *background-color: #300;
+  background-color: #300;
 }
 .humane.humane-animate,
 .humane-libnotify.humane-libnotify-animate {

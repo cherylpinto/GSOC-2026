@@ -1,5 +1,4 @@
 // modes/numberMode.js — Number sequence mode
-// Child connects dots in sequential numerical order. Auto-fills enclosed shape when finished.
 
 define(["activity/fill", "activity/grid", "activity/templates"], function (fill, grid, templates) {
 	"use strict";
@@ -23,12 +22,12 @@ define(["activity/fill", "activity/grid", "activity/templates"], function (fill,
 	function NumberMode(canvasRenderer) {
 		this.renderer = canvasRenderer;
 		this.active = false;
-		this.parts = [];          // array of sequences for multi-part shapes
+		this.parts = [];          
 		this.currentPartIndex = 0;
-		this.sequence = [];       // current active part sequence
-		this.currentIndex = 0;    // which index the user is expected to click Next
-		this.color = "#FF851B";   // Default number mode color
-		this.previousPath = null; // tracking for auto-fill
+		this.sequence = [];       
+		this.currentIndex = 0;    
+		this.color = "#FF851B";   
+		this.previousPath = null; 
 	}
 
 	NumberMode.prototype.activate = function () {
@@ -105,17 +104,14 @@ define(["activity/fill", "activity/grid", "activity/templates"], function (fill,
 	NumberMode.prototype.finishAuthoring = function () {
 		if (this.sequence.length < 3) return null;
 		
-		// Map back to relative coords to center
 		var centerRow = Math.floor(this.renderer.grid.rows / 2);
 		var centerCol = Math.floor(this.renderer.grid.cols / 2);
 		
-		// Determine if the user manually closed the shape
 		var first = this.sequence[0];
 		var last = this.sequence[this.sequence.length - 1];
 		var isClosed = (first.row === last.row && first.col === last.col);
 		
 		if (isClosed) {
-			// Remove the redundant last dot because open=false handles connection automatically
 			this.sequence.pop();
 		}
 		
@@ -176,12 +172,10 @@ define(["activity/fill", "activity/grid", "activity/templates"], function (fill,
 		if (!this.active) return false;
 		
 		if (this.isAuthoring) {
-			// Avoid immediate duplicates
 			if (this.sequence.length > 0) {
 				var last = this.sequence[this.sequence.length - 1];
 				if (last.row === dot.row && last.col === dot.col) return false;
 				
-				// Draw connection line
 				var p1 = grid.getDot(last.row, last.col, this.renderer.grid);
 				var p2 = grid.getDot(dot.row, dot.col, this.renderer.grid);
 				if (p1 && p2) {
@@ -206,25 +200,20 @@ define(["activity/fill", "activity/grid", "activity/templates"], function (fill,
 
 		var expected = this.sequence[this.currentIndex];
 
-		// Check if user clicked the expected dot
 		if (dot.row === expected.row && dot.col === expected.col) {
 			
 			if (this.currentIndex === 0) {
-				// First dot selected
 				this.renderer.selectedDot = dot;
 				this.previousPath = null;
 			} else {
-				// Second or later dot: connect from previous directly (no Bresenham)
 				var prevExpected = this.sequence[this.currentIndex - 1];
 
 				var p1 = grid.getDot(prevExpected.row, prevExpected.col, this.renderer.grid);
 				var p2 = grid.getDot(expected.row, expected.col, this.renderer.grid);
 
 				if (p1 && p2) {
-					// Add line directly (force=true to ignore adjacency)
 					this.renderer.lineManager.addLine(p1, p2, this.color, true);
 
-					// Build up path for final polygon fill
 					if (!this.previousPath) this.previousPath = [];
 					if (this.previousPath.length === 0) {
 						this.previousPath.push(p1);
@@ -239,7 +228,6 @@ define(["activity/fill", "activity/grid", "activity/templates"], function (fill,
 				var isOpen = !!this.sequence.open;
 				
 				if (!isOpen) {
-					// Auto-close: connect the last dot to the first dot
 					var firstExpected = this.sequence[0];
 					var lastExpected = this.sequence[this.sequence.length - 1];
 					var pFirst = grid.getDot(firstExpected.row, firstExpected.col, this.renderer.grid);
@@ -250,7 +238,6 @@ define(["activity/fill", "activity/grid", "activity/templates"], function (fill,
 						if (this.previousPath) this.previousPath.push(pFirst);
 					}
 
-					// Auto-fill polygon!
 					if (this.previousPath && this.previousPath.length >= 3) {
 						var vertices = [];
 						for (var v = 0; v < this.previousPath.length; v++) {
@@ -263,7 +250,6 @@ define(["activity/fill", "activity/grid", "activity/templates"], function (fill,
 					}
 				}
 
-				// Move to next part of the template, if any
 				this.currentPartIndex++;
 				if (this.currentPartIndex < this.parts.length) {
 					this.sequence = this.parts[this.currentPartIndex];
@@ -272,7 +258,6 @@ define(["activity/fill", "activity/grid", "activity/templates"], function (fill,
 					this.renderer.numberLabels = this.sequence;
 					this.renderer.selectedDot = null;
 				} else {
-                                        // Completed all parts of the template
                                         this.renderer.numberLabels = [];
                                         this.renderer.selectedDot = null;
 }

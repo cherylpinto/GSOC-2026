@@ -1,6 +1,5 @@
 // line.js — Line state management
-// Only allows connections between 8-connected adjacent dots (dx<=1, dy<=1).
-// For longer connections, the draw mode decomposes via Bresenham.
+
 
 define([], function () {
 	"use strict";

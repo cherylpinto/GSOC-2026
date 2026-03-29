@@ -1,6 +1,3 @@
-// activity.js — Sugarizer entry point for Connect the Dots
-// Sets up SugarWeb activity, toolbar events, Journal save/load
-
 define([
 	"sugar-web/activity/activity",
 	"sugar-web/env",
@@ -12,22 +9,16 @@ define([
 	"humane"
 ], function (activity, env, datastore, game, templates, presencepalette, palette, humane) {
 
-	// DOM ready
 	requirejs(["domReady!"], function (doc) {
-
-		// Initialize Sugarizer activity
 		activity.setup();
 
 		var currentGame = null;
 
-		// Get environment
 		env.getEnvironment(function (err, environment) {
 
-			// Create game
 			var canvasEl = document.getElementById("dot-canvas");
 			currentGame = new game.Game(canvasEl);
 
-			// Load from Journal
 			if (environment.objectId) {
 				activity.getDatastoreObject().loadAsText(function (error, metadata, data) {
 					if (error == null && data != null) {
@@ -49,7 +40,6 @@ define([
 				});
 			}
 
-			// --- Mode buttons ---
 			var modeButtons = {
 				"draw": document.getElementById("mode-draw-button"),
 				"number": document.getElementById("mode-number-button"),
@@ -67,11 +57,9 @@ define([
 				}
 			}
 
-			// Default: Draw mode active
 			setActiveButton("draw");
 			currentGame.setMode("draw");
 
-			// Network Palette
 			var networkBtn = document.getElementById("network-button");
 			var presence = null;
 			var isHost = false;
@@ -81,15 +69,12 @@ define([
 					return;
 				}
 				if (msg.content.action === 'syncState') {
-					// We only sync the draw mode for now as requested, but Game.fromJSON handles everything safely.
 					if (msg.content.state) {
 						currentGame.fromJSON(msg.content.state);
-						// Prevent pushing this remote state onto our local undo stack
 						currentGame.saveState(true);
 					}
 				} else if (msg.content.action === 'init') {
 					if (isHost) {
-						// Send our current state to the new user
 						presence.sendMessage(presence.getSharedInfo().id, {
 							user: presence.getUserInfo(),
 							content: {
@@ -103,7 +88,6 @@ define([
 
 			var onNetworkUserChanged = function(msg) {
 				if (isHost && msg.move === 1) {
-					// A new user joined, let's sync our state with them
 					presence.sendMessage(presence.getSharedInfo().id, {
 						user: presence.getUserInfo(),
 						content: {
@@ -127,12 +111,10 @@ define([
 				});
 			});
 
-			// If launched from neighborhood
 			if (environment.sharedId) {
 				presence = activity.getPresenceObject(function(error, network) {
 					if (error) return;
 					network.joinSharedActivity(environment.sharedId, function() {
-						// Wait for init state
 						network.sendMessage(environment.sharedId, {
 							user: presence.getUserInfo(),
 							content: { action: 'init' }
@@ -143,7 +125,6 @@ define([
 				});
 			}
 
-			// Hook into local game state changes to propagate them over the network
 			currentGame.onStateChanged = function(state) {
 				if (presence && presence.getSharedInfo() && presence.getSharedInfo().id) {
 					presence.sendMessage(presence.getSharedInfo().id, {
@@ -159,7 +140,6 @@ define([
 			var templatePalette = document.getElementById("template-palette");
 			var colorPalette = document.getElementById("color-palette");
 			
-			// Initialize completely native SugarWeb Palettes
 			var numberPaletteObj = new palette.Palette(document.getElementById("mode-number-button"), "Templates");
 			numberPaletteObj.getPalette().id = "number-palette";
 			var tplWrapper = numberPaletteObj.getPalette().querySelector('.wrapper');
@@ -217,7 +197,6 @@ define([
 
 							var saveBtn = document.getElementById("save-image-button");
 
-							// Restrict Network and Capture buttons to Draw mode only
 							if (name === "draw") {
 								networkBtn.style.display = "";
 								if(saveBtn) saveBtn.style.display = "";
@@ -229,7 +208,6 @@ define([
 				})(modeName);
 			}
 
-			// --- Color palette ---
 			var colorBtn = document.getElementById("color-button");
 			var swatches = colorPalette.querySelectorAll(".color-swatch");
 			
@@ -333,7 +311,7 @@ define([
 							return function (e) {
 								e.stopPropagation();
 								currentGame.numberMode.loadTemplate(name);
-								numberPaletteObj.popDown(); // Close the native palette correctly
+								numberPaletteObj.popDown(); 
 
 								var allCards = tplGrid.querySelectorAll(".tpl-card");
 								for (var m = 0; m < allCards.length; m++) allCards[m].classList.remove("selected");
@@ -349,10 +327,8 @@ define([
 				}
 			}
 
-			// Default: populate with Shapes
 			populateGrid("Shapes");
 
-			// Tab click handlers
 			for (var t = 0; t < tplTabs.length; t++) {
 				tplTabs[t].addEventListener("click", function (e) {
 					e.stopPropagation();
@@ -363,7 +339,6 @@ define([
 			}
 
 			numberBtn.addEventListener("click", function (e) {
-				// Prevent stop propagation here because the exact behavior is handled by palette.js clicks
 				currentGame.setMode("number");
 				setActiveButton("number");
 				networkBtn.style.display = "none";
@@ -385,7 +360,6 @@ define([
 				});
 			}
 
-			// --- Undo / Redo ---
 			document.getElementById("undo-button").addEventListener("click", function () {
 				currentGame.undo();
 			});
@@ -394,12 +368,10 @@ define([
 				currentGame.redo();
 			});
 
-			// --- Clear button ---
 			document.getElementById("clear-button").addEventListener("click", function () {
 				currentGame.clear();
 			});
 
-			// --- Save Custom Authoring Sequence ---
 			document.getElementById("save-authoring").addEventListener("click", function () {
 				var parts = currentGame.numberMode.finishAuthoring();
 				if (parts) {
@@ -413,10 +385,8 @@ define([
 				}
 			});
 
-			// --- Save Image to Journal ---
 			document.getElementById("save-image-button").addEventListener("click", saveImageToJournal);
 
-			// --- Save to Journal on Stop ---
 			document.getElementById("stop-button").addEventListener("click", function (event) {
 				console.log("Saving Connect the Dots...");
 				var jsonData = JSON.stringify(currentGame.toJSON());

@@ -26,7 +26,6 @@ define([
 		this.states = {};
 		this.onStateChanged = null;
 
-		// Wire click to active mode
 		this.renderer.onDotClick = function (dot) {
 			var changed = false;
 			if (self.activeMode && self.activeMode.onDotClick) {
@@ -36,7 +35,7 @@ define([
 		};
 
 		this.setMode("draw");
-		this.saveState(true); // Initial empty state, don't broadcast
+		this.saveState(true); 
 	}
 
 	Game.prototype.setMode = function (modeName) {
@@ -89,7 +88,7 @@ define([
 	};
 
 	Game.prototype.undo = function (isRemote) {
-		if (this.undoStack.length > 1) { // Always keep initial state
+		if (this.undoStack.length > 1) { 
 			var currentState = this.undoStack.pop();
 			this.redoStack.push(currentState);
 			var previousState = this.undoStack[this.undoStack.length - 1];
@@ -149,7 +148,7 @@ define([
                         }
                 }
 		var mode = data.mode || "draw";
-		this.currentModeName = null; // force reload state
+		this.currentModeName = null;
 		this.setMode(mode);
 	};
 

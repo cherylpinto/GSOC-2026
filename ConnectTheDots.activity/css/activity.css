@@ -1,9 +1,9 @@
-/* === Activity icon === */
+/* Activity icon  */
 #main-toolbar #activity-button {
   background-image: url(../activity/activity-icon.svg);
 }
 
-/* === Toolbar icons === */
+/* Toolbar icons  */
 #main-toolbar #network-button {
   background-image: url(../lib/sugar-web/graphics/icons/actions/zoom-home.svg);
 }
@@ -40,7 +40,7 @@
   background-image: url(../lib/sugar-web/graphics/icons/actions/activity-stop.svg);
 }
 
-/* === Presence Palette icons === */
+/*  Presence Palette icons  */
 #private-button {
 	background-image: url(../lib/sugar-web/graphics/icons/actions/zoom-home.svg);
 	width: 47px;
@@ -69,13 +69,13 @@
 	border-radius: 5.5px;
 }
 
-/* === Active mode indicator === */
+/* Active mode indicator */
 .toolbutton.active {
   background-color: rgba(0, 0, 0, 0.15);
   border-radius: 5px;
 }
 
-/* === Body & Canvas === */
+/* Body & Canvas */
 body {
   height: 100vh;
   margin: 0;
@@ -98,7 +98,7 @@ body {
   cursor: crosshair;
 }
 
-/* === Template picker (Sugarizer-style palette) === */
+/* Template picker (Sugarizer-style palette)  */
 .tpl-picker {
   position: absolute;
   top: 55px;
@@ -115,12 +115,10 @@ body {
   display: none;
 }
 
-/* Remove default hr bottom margin from the native palette separator */
 #number-palette hr {
   margin-bottom: 0px !important;
 }
 
-/* Category tabs — flat style */
 .tpl-tabs {
   display: flex;
   justify-content: space-around;
@@ -199,7 +197,7 @@ body {
   line-height: 1;
 }
 
-/* === Color palette === */
+/* Color palette  */
 .color-palette {
   position: absolute;
   top: 55px;

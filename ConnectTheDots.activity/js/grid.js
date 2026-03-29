@@ -1,5 +1,4 @@
 // grid.js — Dot grid calculation module
-// Creates an evenly spaced grid of dots based on canvas dimensions
 
 define([], function () {
 	"use strict";
