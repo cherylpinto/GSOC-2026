@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8" />
+<title>Connect the Dots</title>
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, viewport-fit=cover"/>
+<link rel="stylesheet" media="not screen and (device-width: 1200px) and (device-height: 900px)"
+	href="lib/sugar-web/graphics/css/sugar-96dpi.css">
+<link rel="stylesheet" media="screen and (device-width: 1200px) and (device-height: 900px)"
+	href="lib/sugar-web/graphics/css/sugar-200dpi.css">
+<link rel="stylesheet" href="css/activity.css">
+<link rel="stylesheet" href="css/libnotify.css">
+<script data-main="js/loader" src="lib/require.js"></script>
+<script type="text/javascript" src="../../cordova.js"></script>
+</head>
+
+<body>
+<div id="main-toolbar" class="toolbar">
+  <button class="toolbutton" id="activity-button" title="Connect the Dots Activity"></button>
+
+  <!-- Modes -->
+  <button class="toolbutton active" id="mode-draw-button" title="Draw Mode"></button>
+  <button class="toolbutton" id="mode-number-button" title="Number Mode"></button>
+  <button class="toolbutton" id="mode-capture-button" title="Capture Mode"></button>
+
+  <!-- Color picker -->
+  <button class="toolbutton" id="color-button" title="Color"></button>
+
+<button class="toolbutton network private" id="network-button" title="Network"></button>
+
+  <!-- Undo / Redo -->
+  <button class="toolbutton" id="undo-button" title="Undo"></button>
+  <button class="toolbutton" id="redo-button" title="Redo"></button>
+
+  <!-- Clear -->
+  <button class="toolbutton" id="clear-button" title="Clear"></button>
+
+  <!-- Save Image -->
+  <button class="toolbutton" id="save-image-button" title="Save Image"></button>
+  <button class="toolbutton hidden" id="save-template-button" title="Save Custom Template" style="display:none; background-image: url(icons/filesave.svg);"></button>
+
+  <!-- Right aligned -->
+  <button class="toolbutton pull-right" id="stop-button" title="Stop"></button>
+  <button class="toolbutton pull-right" id="help-button" title="Help"></button>
+</div>
+
+<!-- Template picker (outside toolbar to avoid overflow clipping) -->
+<div id="template-palette" class="tpl-picker hidden">
+  <div class="tpl-tabs">
+    <button class="tpl-tab active" data-category="Shapes">Shapes</button>
+    <button class="tpl-tab" data-category="Animals">Animals</button>
+    <button class="tpl-tab" data-category="Letters">Letters</button>
+    <button class="tpl-tab" data-category="Numbers">Numbers</button>
+    <button class="tpl-tab" data-category="Custom">Custom</button>
+  </div>
+  <div class="tpl-grid" id="tpl-grid">
+  </div>
+</div>
+
+<!-- Canvas area -->
+<div id="canvas">
+  <canvas id="dot-canvas"></canvas>
+  <button id="save-authoring" style="display:none; position:fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 1000; padding:15px 30px; background:#005696; color:#fff; font-weight:bold; font-size:18px; border-radius:12px; border:3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.5); cursor:pointer;">Save Custom Design</button>
+</div>
+
+<!-- Color palette popup (hidden by default) -->
+<div id="color-palette" class="color-palette hidden">
+  <div class="color-swatch" data-color="#FF4136" style="background:#FF4136"></div>
+  <div class="color-swatch" data-color="#FF851B" style="background:#FF851B"></div>
+  <div class="color-swatch" data-color="#FFDC00" style="background:#FFDC00"></div>
+  <div class="color-swatch" data-color="#2ECC40" style="background:#2ECC40"></div>
+  <div class="color-swatch" data-color="#0074D9" style="background:#0074D9"></div>
+  <div class="color-swatch" data-color="#B10DC9" style="background:#B10DC9"></div>
+  <div class="color-swatch" data-color="#FF69B4" style="background:#FF69B4"></div>
+  <div class="color-swatch" data-color="#01FF70" style="background:#01FF70"></div>
+  <div class="color-swatch" data-color="#7FDBFF" style="background:#7FDBFF"></div>
+  <div class="color-swatch" data-color="#F012BE" style="background:#F012BE"></div>
+  <div class="color-swatch" data-color="#39CCCC" style="background:#39CCCC"></div>
+  <div class="color-swatch" data-color="#000000" style="background:#000000"></div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,239 @@
+/* === Activity icon === */
+#main-toolbar #activity-button {
+  background-image: url(../activity/activity-icon.svg);
+}
+
+/* === Toolbar icons === */
+#main-toolbar #network-button {
+  background-image: url(../lib/sugar-web/graphics/icons/actions/zoom-home.svg);
+}
+#main-toolbar #mode-draw-button {
+  background-image: url(../icons/draw-mode.svg);
+}
+#main-toolbar #mode-number-button {
+  background-image: url(../icons/number-mode.svg);
+  position: relative;
+}
+
+#main-toolbar #mode-capture-button {
+  background-image: url(../icons/capture-mode.svg);
+}
+#main-toolbar #undo-button {
+  background-image: url(../icons/edit-undo.svg);
+}
+#main-toolbar #redo-button {
+  background-image: url(../icons/edit-redo.svg);
+}
+#main-toolbar #color-button {
+  background-image: url(../icons/color-picker.svg);
+}
+#main-toolbar #clear-button {
+  background-image: url(../icons/edit-clear.svg);
+}
+#main-toolbar #save-image-button {
+  background-image: url(../lib/sugar-web/graphics/icons/actions/photo.svg);
+}
+#main-toolbar #help-button {
+	background-image: url(../icons/help.svg);
+}
+#main-toolbar #stop-button {
+  background-image: url(../lib/sugar-web/graphics/icons/actions/activity-stop.svg);
+}
+
+/* === Presence Palette icons === */
+#private-button {
+	background-image: url(../lib/sugar-web/graphics/icons/actions/zoom-home.svg);
+	width: 47px;
+	height: 47px;
+	margin: 4px 2px;
+	color: transparent;
+	background-color: transparent;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	border: 0;
+	border-radius: 5.5px;
+}
+
+#shared-button {
+	background-image: url(../lib/sugar-web/graphics/icons/actions/zoom-neighborhood.svg);
+	width: 47px;
+	height: 47px;
+	margin: 4px 2px;
+	color: transparent;
+	background-color: transparent;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	border: 0;
+	border-radius: 5.5px;
+}
+
+/* === Active mode indicator === */
+.toolbutton.active {
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+}
+
+/* === Body & Canvas === */
+body {
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+#canvas {
+  position: absolute;
+  top: 55px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #FDFDFD;
+}
+
+#dot-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+
+/* === Template picker (Sugarizer-style palette) === */
+.tpl-picker {
+  position: absolute;
+  top: 55px;
+  left: 55px;
+  display: flex;
+  flex-direction: column;
+  background: #3C3C3C;
+  border-radius: 0 0 8px 8px;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  width: 380px;
+}
+.tpl-picker.hidden {
+  display: none;
+}
+
+/* Remove default hr bottom margin from the native palette separator */
+#number-palette hr {
+  margin-bottom: 0px !important;
+}
+
+/* Category tabs — flat style */
+.tpl-tabs {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #555;
+  background: #333;
+}
+.tpl-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  color: #888;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 12px 8px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  text-align: center;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.tpl-tab:hover {
+  color: #CCC;
+}
+.tpl-tab.active {
+  color: #FFF;
+  border-bottom-color: #FFF;
+  background: transparent;
+}
+
+/* Template cards grid */
+.tpl-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px;
+}
+.tpl-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 56px;
+  height: 66px;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  padding: 4px 2px 2px 2px;
+}
+.tpl-card:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.2);
+}
+.tpl-card.selected {
+  border-color: #FFF;
+  background: rgba(255,255,255,0.15);
+}
+.tpl-card canvas {
+  display: block;
+  margin-bottom: 4px;
+}
+.tpl-card-name {
+  font-size: 10px;
+  color: #DDD;
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 52px;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* === Color palette === */
+.color-palette {
+  position: absolute;
+  top: 55px;
+  left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px;
+  background: #3C3C3C;
+  border-radius: 0 0 8px 0;
+  z-index: 100;
+  width: 160px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.color-palette.hidden {
+  display: none;
+}
+
+.color-swatch {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid #555;
+  transition: transform 0.1s;
+}
+
+.color-swatch:hover {
+  transform: scale(1.1);
+  border-color: #FFF;
+}
+
+.color-swatch.selected {
+  border: 2px solid #FFF;
+  transform: scale(1.1);
+}
